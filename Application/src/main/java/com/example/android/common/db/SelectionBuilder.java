@@ -47,8 +47,8 @@ import java.util.Map;
  *
  * <pre>
  *     SelectionBuilder builder = new SelectionBuilder();
- *     Cursor c = builder.table(NewsContract.NewsItem.TABLE_NAME)       // String TABLE_NAME = "entry"
- *                       .where(NewsContract.NewsItem._ID + "=?", id);  // String _ID = "_ID"
+ *     Cursor c = builder.table(NewsContract.NewsItemConstants.TABLE_NAME)       // String TABLE_NAME = "entry"
+ *                       .where(NewsContract.NewsItemConstants._ID + "=?", id);  // String _ID = "_ID"
  *                       .query(db, projection, sortOrder)
  *
  * </pre>

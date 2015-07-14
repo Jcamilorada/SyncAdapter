@@ -15,14 +15,14 @@ class NewsDatabase extends SQLiteOpenHelper
     private static final String COMMA_SEP = ",";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + NewsContract.NewsItem.TABLE_NAME + " (" +
-                    NewsContract.NewsItem._ID + " INTEGER PRIMARY KEY," +
-                    NewsContract.NewsItem.COLUMN_NAME_ENTRY_ID + TYPE_TEXT + COMMA_SEP +
-                    NewsContract.NewsItem.COLUMN_NAME_TITLE    + TYPE_TEXT + COMMA_SEP +
-                    NewsContract.NewsItem.COLUMN_NAME_LINK + TYPE_TEXT + COMMA_SEP +
-                    NewsContract.NewsItem.COLUMN_NAME_PUBLISHED + TYPE_INTEGER + ")";
+            "CREATE TABLE " + NewsContract.NewsItemConstants.TABLE_NAME + " (" +
+                    NewsContract.NewsItemConstants._ID + " INTEGER PRIMARY KEY," +
+                    NewsContract.NewsItemConstants.COLUMN_NAME_ENTRY_ID + TYPE_TEXT + COMMA_SEP +
+                    NewsContract.NewsItemConstants.COLUMN_NAME_TITLE    + TYPE_TEXT + COMMA_SEP +
+                    NewsContract.NewsItemConstants.COLUMN_NAME_LINK + TYPE_TEXT + COMMA_SEP +
+                    NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED + TYPE_INTEGER + ")";
 
-    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + NewsContract.NewsItem.TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + NewsContract.NewsItemConstants.TABLE_NAME;
 
     public NewsDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.example.android.basicsyncadapter.R;
 
-/**
- * Activity for holding EntryListFragment.
- */
 public class EntryListActivity extends FragmentActivity {
 
     @Override
