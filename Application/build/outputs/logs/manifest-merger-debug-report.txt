@@ -1,8 +1,6 @@
 -- Merging decision tree log ---
 manifest
 ADDED from AndroidManifest.xml:20:1
-	xmlns:android
-		ADDED from AndroidManifest.xml:20:11
 	package
 		ADDED from AndroidManifest.xml:21:5
 	android:versionName
@@ -11,6 +9,8 @@ ADDED from AndroidManifest.xml:20:1
 		ADDED from AndroidManifest.xml:22:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:20:11
 uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:29:5
 	android:name
@@ -59,10 +59,10 @@ ADDED from AndroidManifest.xml:51:17
 		ADDED from AndroidManifest.xml:51:27
 provider#com.example.android.basicsyncadapter.provider.FeedProvider
 ADDED from AndroidManifest.xml:63:9
-	android:exported
-		ADDED from AndroidManifest.xml:66:13
 	android:authorities
 		ADDED from AndroidManifest.xml:65:13
+	android:exported
+		ADDED from AndroidManifest.xml:66:13
 	android:name
 		ADDED from AndroidManifest.xml:64:13
 service#com.example.android.basicsyncadapter.sync.SyncService

@@ -21,4 +21,4 @@ limitations under the License.
           android:title="@string/description_refresh"
           android:orderInCategory="1"
           android:showAsAction="always" />
-</menu><!-- From: file:/Users/JuanC/Desktop/Developer/Projects/SyncAdapter/Application/src/main/res/menu/main.xml -->
+</menu><!-- From: file:/C:/Dev/Project/SyncAdapter/Application/src/main/res/menu/main.xml -->
