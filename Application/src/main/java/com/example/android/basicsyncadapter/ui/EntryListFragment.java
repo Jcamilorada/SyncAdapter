@@ -49,8 +49,6 @@ import java.util.GregorianCalendar;
 
 public class EntryListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-
-    private static final String TAG = "EntryListFragment";
     public static final String SORT_ORDER = NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED + " desc";
 
     private SimpleCursorAdapter mAdapter;
@@ -133,7 +131,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
         super.onResume();
         mSyncStatusObserver.onStatusChanged(0);
 
-        // Watch for sync state changes
+
         final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
                 ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
         mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
@@ -198,8 +196,8 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
         Cursor c = (Cursor) mAdapter.getItem(position);
         String articleUrlString = c.getString(NewsContract.NewsItemConstants.LINK_COLUMN_INDEX);
 
-        if (articleUrlString == null) {
-            Log.e(TAG, "Attempt to launch entry with null link");
+        if (articleUrlString == null)
+        {
             return;
         }
 
