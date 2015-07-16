@@ -1,4 +1,4 @@
-package com.example.basicsyncadapter.security;
+package com.syncadapter.security;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -7,16 +7,16 @@ import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
-import com.example.basicsyncadapter.rest.AuthenticationRequest;
-import com.example.basicsyncadapter.rest.AuthenticationResult;
-import com.example.basicsyncadapter.rest.SecurityService;
-import com.example.basicsyncadapter.sync.SyncUtils;
+import com.syncadapter.rest.AuthenticationRequest;
+import com.syncadapter.rest.AuthenticationResult;
+import com.syncadapter.rest.RestConstants;
+import com.syncadapter.rest.SecurityService;
+import com.syncadapter.sync.SyncUtils;
 import retrofit.RestAdapter;
 
 public class Authenticator extends AbstractAccountAuthenticator
 {
-    private static final String REST_RESOURCE_URL = "https://demo5496544.mockable.io/";
-    public static final String INVALID_AUTH_TOKEN_TYPE = "invalid authTokenType";
+    private static final String INVALID_AUTH_TOKEN_TYPE_MESSAGE = "invalid auth token type";
 
     private final Context context;
 
@@ -53,9 +53,9 @@ public class Authenticator extends AbstractAccountAuthenticator
     {
         final Bundle result = new Bundle();
 
-        if (!authTokenType.equals(GenericAccountService.AUTHTOKEN_TYPE))
+        if (!authTokenType.equals(SecurityConstants.AUTHTOKEN_TYPE))
         {
-            result.putString(AccountManager.KEY_ERROR_MESSAGE, INVALID_AUTH_TOKEN_TYPE);
+            result.putString(AccountManager.KEY_ERROR_MESSAGE, INVALID_AUTH_TOKEN_TYPE_MESSAGE);
             return result;
         }
 
@@ -64,7 +64,7 @@ public class Authenticator extends AbstractAccountAuthenticator
             String password = AccountManager.get(context).getPassword(account);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(REST_RESOURCE_URL)
+                .setEndpoint(RestConstants.REST_RESOURCE_URL)
                 .build();
 
             SecurityService service = restAdapter.create(SecurityService.class);
@@ -72,7 +72,7 @@ public class Authenticator extends AbstractAccountAuthenticator
             AuthenticationResult authenticationResult =  service.getAuthToken(request);
 
             result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-            result.putString(AccountManager.KEY_ACCOUNT_TYPE, SyncUtils.ACCOUNT_TYPE);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, SecurityConstants.ACCOUNT_TYPE);
             result.putString(AccountManager.KEY_AUTHTOKEN, authenticationResult.getToken());
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.basicsyncadapter"
+    package="com.syncadapter"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name="com.example.basicsyncadapter.ui.EntryListActivity"
+            android:name="com.syncadapter.ui.EntryListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +28,11 @@
         </activity>
 
         <provider
-            android:name="com.example.basicsyncadapter.provider.NewsProvider"
-            android:authorities="com.example.basicsyncadapter"
+            android:name=".provider.NewsProvider"
+            android:authorities="com.syncadapter"
             android:exported="false" />
 
-        <service android:name="com.example.basicsyncadapter.sync.SyncService"
+        <service android:name=".sync.SyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -41,7 +41,7 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
-        <service android:name="com.example.basicsyncadapter.security.GenericAccountService">
+        <service android:name=".security.SyncAccountService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>

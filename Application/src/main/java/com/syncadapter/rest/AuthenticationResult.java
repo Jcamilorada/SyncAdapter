@@ -1,5 +1,10 @@
-package com.example.basicsyncadapter.rest;
+package com.syncadapter.rest;
 
+/**
+ *
+ * Authentication response payload.
+ *
+ */
 public class AuthenticationResult
 {
     public String getToken()

@@ -1,5 +1,10 @@
-package com.example.basicsyncadapter.rest;
+package com.syncadapter.rest;
 
+/**
+ *
+ * Represent a news item.
+ *
+ */
 public class NewsItem
 {
     private String id;

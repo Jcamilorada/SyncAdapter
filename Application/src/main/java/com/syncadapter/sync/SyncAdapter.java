@@ -1,4 +1,4 @@
-package com.example.basicsyncadapter.sync;
+package com.syncadapter.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -15,11 +15,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 
-import com.example.basicsyncadapter.provider.NewsContract;
+import com.syncadapter.provider.NewsConstants;
 
-import com.example.basicsyncadapter.rest.NewsItem;
-import com.example.basicsyncadapter.rest.NewsService;
-import com.example.basicsyncadapter.security.GenericAccountService;
+import com.syncadapter.rest.NewsItem;
+import com.syncadapter.rest.NewsService;
+import com.syncadapter.security.SecurityConstants;
+import com.syncadapter.security.SyncAccountService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit.RestAdapter;
@@ -58,7 +59,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter
             String authtoken = null;
             try
             {
-                authtoken = AccountManager.get(context).blockingGetAuthToken(account, GenericAccountService.AUTHTOKEN_TYPE, true);
+                authtoken = AccountManager.get(context).blockingGetAuthToken(account, SecurityConstants.AUTHTOKEN_TYPE, true);
             }
             catch (OperationCanceledException e)
             {
@@ -108,20 +109,17 @@ class SyncAdapter extends AbstractThreadedSyncAdapter
         ArrayList<ContentProviderOperation> batch = new ArrayList<>(news.size());
         for (NewsItem bean : news)
         {
-            batch.add(ContentProviderOperation.newInsert(NewsContract.NewsItemConstants.CONTENT_URI)
-                .withValue(NewsContract.NewsItemConstants.COLUMN_NAME_ENTRY_ID, bean.getId())
-                .withValue(NewsContract.NewsItemConstants.COLUMN_NAME_TITLE, bean.getTitle())
-                .withValue(NewsContract.NewsItemConstants.COLUMN_NAME_LINK, bean.getLink())
-                .withValue(NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED, bean.getPublished())
+            batch.add(ContentProviderOperation.newInsert(NewsConstants.NewsItemConstants.CONTENT_URI)
+                .withValue(NewsConstants.NewsItemConstants.COLUMN_NAME_ENTRY_ID, bean.getId())
+                .withValue(NewsConstants.NewsItemConstants.COLUMN_NAME_TITLE, bean.getTitle())
+                .withValue(NewsConstants.NewsItemConstants.COLUMN_NAME_LINK, bean.getLink())
+                .withValue(NewsConstants.NewsItemConstants.COLUMN_NAME_PUBLISHED, bean.getPublished())
                 .build());
 
             syncResult.stats.numInserts++;
         }
 
-        //syncResult.delayUntil = 25000;
-        //syncResult.delayUntil = (long) ((System.currentTimeMillis() / 1000) + (60 * 1));
-
-        context.getContentResolver().applyBatch(NewsContract.CONTENT_AUTHORITY, batch);
-        context.getContentResolver().notifyChange(NewsContract.NewsItemConstants.CONTENT_URI, null, false);
+        context.getContentResolver().applyBatch(NewsConstants.CONTENT_AUTHORITY, batch);
+        context.getContentResolver().notifyChange(NewsConstants.NewsItemConstants.CONTENT_URI, null, false);
     }
 }

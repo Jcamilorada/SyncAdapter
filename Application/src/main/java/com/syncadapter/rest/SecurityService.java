@@ -1,4 +1,4 @@
-package com.example.basicsyncadapter.rest;
+package com.syncadapter.rest;
 
 import retrofit.http.Body;
 import retrofit.http.POST;

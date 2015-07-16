@@ -1,4 +1,4 @@
-package com.example.basicsyncadapter.sync;
+package com.syncadapter.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -10,22 +10,23 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 
-import com.example.basicsyncadapter.provider.NewsContract;
-import com.example.basicsyncadapter.security.GenericAccountService;
+import com.syncadapter.provider.NewsConstants;
+import com.syncadapter.security.SecurityConstants;
+import com.syncadapter.security.SyncAccountService;
 
 public class SyncUtils {
     private static final long SYNC_FREQUENCY_SECONDS = 1;
-    private static final String CONTENT_AUTHORITY = NewsContract.CONTENT_AUTHORITY;
+    private static final String CONTENT_AUTHORITY = NewsConstants.CONTENT_AUTHORITY;
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
-    public static final String ACCOUNT_TYPE = "com.example.basicsyncadapter.account";
 
     public static void CreateSyncAccount(Context context, String accountName)
     {
         boolean newAccount = false;
         boolean setupComplete = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_SETUP_COMPLETE, false);
 
-        Account account = GenericAccountService.GetAccount(accountName, ACCOUNT_TYPE);
+        Account account = SyncAccountService.GetAccount(accountName, SecurityConstants.ACCOUNT_TYPE);
         AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
+
         if (accountManager.addAccountExplicitly(account, null, null))
         {
             setSyncPeriod(account);
@@ -52,8 +53,8 @@ public class SyncUtils {
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        ContentResolver.requestSync(GenericAccountService.GetAccount(accountName, ACCOUNT_TYPE),
-            NewsContract.CONTENT_AUTHORITY,
+        ContentResolver.requestSync(SyncAccountService.GetAccount(accountName, SecurityConstants.ACCOUNT_TYPE),
+            NewsConstants.CONTENT_AUTHORITY,
             bundle);
     }
 }

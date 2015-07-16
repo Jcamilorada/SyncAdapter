@@ -1,20 +1,4 @@
-/*
- * Copyright 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.example.basicsyncadapter.ui;
+package com.syncadapter.ui;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -39,17 +23,18 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.basicsyncadapter.R;
-import com.example.basicsyncadapter.provider.NewsContract;
-import com.example.basicsyncadapter.sync.SyncUtils;
-import com.example.basicsyncadapter.security.GenericAccountService;
+import com.syncadapter.R;
+import com.syncadapter.provider.NewsConstants;
+import com.syncadapter.security.SecurityConstants;
+import com.syncadapter.sync.SyncUtils;
+import com.syncadapter.security.SyncAccountService;
 
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
 
 public class EntryListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    private static final String SORT_ORDER = NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED + " desc";
+    private static final String SORT_ORDER = NewsConstants.NewsItemConstants.COLUMN_NAME_PUBLISHED + " desc";
 
     /* User name and password, change for ui controls that retrieves information. */
     private static final String USER_NAME = "USER_NAME";
@@ -61,16 +46,16 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
 
     private static final String[] SELECTION_QUERY_STATEMENT = new String[]
         {
-            NewsContract.NewsItemConstants._ID,
-            NewsContract.NewsItemConstants.COLUMN_NAME_TITLE,
-            NewsContract.NewsItemConstants.COLUMN_NAME_LINK,
-            NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED
+            NewsConstants.NewsItemConstants._ID,
+            NewsConstants.NewsItemConstants.COLUMN_NAME_TITLE,
+            NewsConstants.NewsItemConstants.COLUMN_NAME_LINK,
+            NewsConstants.NewsItemConstants.COLUMN_NAME_PUBLISHED
         };
 
     private static final String[] FROM_COLUMNS = new String[]
         {
-            NewsContract.NewsItemConstants.COLUMN_NAME_TITLE,
-            NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED
+            NewsConstants.NewsItemConstants.COLUMN_NAME_TITLE,
+            NewsConstants.NewsItemConstants.COLUMN_NAME_PUBLISHED
         };
 
 
@@ -98,7 +83,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Account account = GenericAccountService.GetAccount(USER_NAME, SyncUtils.ACCOUNT_TYPE);
+        Account account = SyncAccountService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
         AccountManager.get(getActivity()).setPassword(account, PASSWORD);
 
         mAdapter = new SimpleCursorAdapter(
@@ -112,7 +97,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
         mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if (columnIndex == NewsContract.NewsItemConstants.PUBLISHED_COLUMN_INDEX)
+                if (columnIndex == NewsConstants.NewsItemConstants.PUBLISHED_COLUMN_INDEX)
                 {
                     GregorianCalendar calendar = new GregorianCalendar();
                     calendar.setTimeInMillis(cursor.getLong(columnIndex));
@@ -157,7 +142,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(
                 getActivity(),
-                NewsContract.NewsItemConstants.CONTENT_URI,
+                NewsConstants.NewsItemConstants.CONTENT_URI,
                 SELECTION_QUERY_STATEMENT,
                 null,
                 null,
@@ -201,7 +186,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
         super.onListItemClick(listView, view, position, id);
 
         Cursor c = (Cursor) mAdapter.getItem(position);
-        String articleUrlString = c.getString(NewsContract.NewsItemConstants.LINK_COLUMN_INDEX);
+        String articleUrlString = c.getString(NewsConstants.NewsItemConstants.LINK_COLUMN_INDEX);
 
         if (articleUrlString == null)
         {
@@ -244,7 +229,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
                  */
                 @Override
                 public void run() {
-                    Account account = GenericAccountService.GetAccount(USER_NAME, SyncUtils.ACCOUNT_TYPE);
+                    Account account = SyncAccountService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
 
                     if (account == null)
                     {
@@ -252,8 +237,8 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
                         return;
                     }
 
-                    boolean syncActive = ContentResolver.isSyncActive(account, NewsContract.CONTENT_AUTHORITY);
-                    boolean syncPending = ContentResolver.isSyncPending(account, NewsContract.CONTENT_AUTHORITY);
+                    boolean syncActive = ContentResolver.isSyncActive(account, NewsConstants.CONTENT_AUTHORITY);
+                    boolean syncPending = ContentResolver.isSyncPending(account, NewsConstants.CONTENT_AUTHORITY);
                     setRefreshActionButtonState(syncActive || syncPending);
                 }
             });

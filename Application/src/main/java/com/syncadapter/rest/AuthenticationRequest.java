@@ -1,5 +1,10 @@
-package com.example.basicsyncadapter.rest;
+package com.syncadapter.rest;
 
+/**
+ *
+ * Authentication request payload.
+ *
+ */
 public class AuthenticationRequest
 {
     private String userName;
