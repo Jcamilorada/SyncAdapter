@@ -1,6 +1,6 @@
-package com.example.android.basicsyncadapter.rest;
+package com.example.basicsyncadapter.rest;
 
-public class NewsItemBean
+public class NewsItem
 {
     private String id;
     private String title;

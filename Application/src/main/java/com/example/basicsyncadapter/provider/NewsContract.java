@@ -1,4 +1,4 @@
-package com.example.android.basicsyncadapter.provider;
+package com.example.basicsyncadapter.provider;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -10,7 +10,7 @@ public class NewsContract
     {
     }
 
-    public static final String CONTENT_AUTHORITY = "com.example.android.basicsyncadapter";
+    public static final String CONTENT_AUTHORITY = "com.example.basicsyncadapter";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     private static final String PATH_ENTRIES = "entries";
 

@@ -1,4 +1,4 @@
-package com.example.android.basicsyncadapter.sync;
+package com.example.basicsyncadapter.sync;
 
 import android.app.Service;
 import android.content.Intent;

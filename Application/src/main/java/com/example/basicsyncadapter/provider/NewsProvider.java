@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.basicsyncadapter.provider;
+package com.example.basicsyncadapter.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -24,7 +24,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.example.android.common.db.SelectionBuilder;
+import com.example.basicsyncadapter.db.SelectionBuilder;
 
 public class NewsProvider extends ContentProvider {
     private NewsDatabase mDatabaseHelper;
@@ -99,7 +99,7 @@ public class NewsProvider extends ContentProvider {
                 result = Uri.parse(NewsContract.NewsItemConstants.CONTENT_URI + "/" + id);
                 break;
             case SINGLE_RECORDS_ID:
-                throw new UnsupportedOperationException("Insert not supported on URI: " + uri);
+                throw new UnsupportedOperationException(uri.toString());
             default:
                 throw new UnsupportedOperationException(uri.toString());
         }

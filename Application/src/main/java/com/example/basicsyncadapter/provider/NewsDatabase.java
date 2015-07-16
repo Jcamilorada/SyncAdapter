@@ -1,4 +1,4 @@
-package com.example.android.basicsyncadapter.provider;
+package com.example.basicsyncadapter.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

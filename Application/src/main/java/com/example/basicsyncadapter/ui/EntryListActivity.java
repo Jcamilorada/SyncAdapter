@@ -1,8 +1,8 @@
-package com.example.android.basicsyncadapter.ui;
+package com.example.basicsyncadapter.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import com.example.android.basicsyncadapter.R;
+import com.example.basicsyncadapter.R;
 
 public class EntryListActivity extends FragmentActivity {
 

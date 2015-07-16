@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.android.basicsyncadapter.ui;
+package com.example.basicsyncadapter.ui;
 
 import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -31,7 +32,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,17 +39,21 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.basicsyncadapter.R;
-import com.example.android.basicsyncadapter.provider.NewsContract;
-import com.example.android.basicsyncadapter.sync.SyncUtils;
-import com.example.android.common.accounts.GenericAccountService;
+import com.example.basicsyncadapter.R;
+import com.example.basicsyncadapter.provider.NewsContract;
+import com.example.basicsyncadapter.sync.SyncUtils;
+import com.example.basicsyncadapter.security.GenericAccountService;
 
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
 
 public class EntryListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    public static final String SORT_ORDER = NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED + " desc";
+    private static final String SORT_ORDER = NewsContract.NewsItemConstants.COLUMN_NAME_PUBLISHED + " desc";
+
+    /* User name and password, change for ui controls that retrieves information. */
+    private static final String USER_NAME = "USER_NAME";
+    private static final String PASSWORD = "PASSWORD";
 
     private SimpleCursorAdapter mAdapter;
     private Object mSyncObserverHandle;
@@ -87,12 +91,15 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        SyncUtils.CreateSyncAccount(activity);
+        SyncUtils.CreateSyncAccount(activity, USER_NAME);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Account account = GenericAccountService.GetAccount(USER_NAME, SyncUtils.ACCOUNT_TYPE);
+        AccountManager.get(getActivity()).setPassword(account, PASSWORD);
 
         mAdapter = new SimpleCursorAdapter(
                 getActivity(),
@@ -182,7 +189,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
         switch (item.getItemId())
         {
             case R.id.menu_refresh:
-                SyncUtils.TriggerRefresh();
+                SyncUtils.syncNow(USER_NAME);
                 return true;
         }
 
@@ -237,7 +244,8 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
                  */
                 @Override
                 public void run() {
-                    Account account = GenericAccountService.GetAccount(SyncUtils.ACCOUNT_TYPE);
+                    Account account = GenericAccountService.GetAccount(USER_NAME, SyncUtils.ACCOUNT_TYPE);
+
                     if (account == null)
                     {
                         setRefreshActionButtonState(false);
