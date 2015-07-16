@@ -41,7 +41,7 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
-        <service android:name=".security.SyncAccountService">
+        <service android:name=".security.SecurityService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>

@@ -20,7 +20,6 @@ import com.syncadapter.provider.NewsConstants;
 import com.syncadapter.rest.NewsItem;
 import com.syncadapter.rest.NewsService;
 import com.syncadapter.security.SecurityConstants;
-import com.syncadapter.security.SyncAccountService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import retrofit.RestAdapter;

@@ -27,7 +27,7 @@ import com.syncadapter.R;
 import com.syncadapter.provider.NewsConstants;
 import com.syncadapter.security.SecurityConstants;
 import com.syncadapter.sync.SyncUtils;
-import com.syncadapter.security.SyncAccountService;
+import com.syncadapter.security.SecurityService;
 
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
@@ -83,7 +83,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Account account = SyncAccountService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
+        Account account = SecurityService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
         AccountManager.get(getActivity()).setPassword(account, PASSWORD);
 
         mAdapter = new SimpleCursorAdapter(
@@ -229,7 +229,7 @@ public class EntryListFragment extends ListFragment implements LoaderManager.Loa
                  */
                 @Override
                 public void run() {
-                    Account account = SyncAccountService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
+                    Account account = SecurityService.GetAccount(USER_NAME, SecurityConstants.ACCOUNT_TYPE);
 
                     if (account == null)
                     {
